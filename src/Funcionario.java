@@ -12,46 +12,57 @@ public class Funcionario {
         return cargo;
     }
 
-    public Object setCargo(Cargo cargo) {
+    public void setCargo(Cargo cargo) {
         if(cargo == null){
-            return null;
+            try{
+            } catch (Exception e){
+                System.out.println("Cargo está como nulo");
+            }
+        }else{
+            this.cargo = cargo;
         }
-        return cargo;
     }
 
     public double getSalario() {
         double porcentagemBonus = 0;
         double salarioNovo = 0;
-        if(salarioBase <= 3000){
-            if(cargo.equals(Cargo.Dev)){
-                porcentagemBonus = 20;
-                salarioNovo = (porcentagemBonus * salarioBase) / 100;
-            } else {
+        if(cargo == Cargo.Dev){
+            if(salarioBase > 3000){
                 porcentagemBonus = 10;
-                salarioNovo = (porcentagemBonus * salarioBase) / 100;
+                salarioNovo = (salarioBase * porcentagemBonus) / 100;
+
+            }else {
+                porcentagemBonus = 20;
+                salarioNovo = (salarioBase * porcentagemBonus) / 100;
+
             }
-            if (cargo.equals(Cargo.DBA) && cargo.equals(Cargo.Tester)){
-                if(salarioBase >= 3000){
-                    porcentagemBonus = 10;
-                    salarioNovo = (porcentagemBonus * salarioBase) / 100;
-                }else {
-                    porcentagemBonus = 15;
-                    salarioNovo = (porcentagemBonus * salarioBase) / 100;
-                }
+        }else{
+            if(salarioBase > 3000){
+                porcentagemBonus = 15;
+                salarioNovo = (salarioBase * porcentagemBonus) / 100;
+
+            }else{
+                porcentagemBonus = 20;
+                salarioNovo = (salarioBase * porcentagemBonus) / 100;
 
             }
         }
-        return salarioNovo;
+        return salarioNovo + salarioBase;
     }
+
     public void setSalario(double salarioBase) {
-        if(salarioBase <= 0){
-            return;
-        }
-        this.salarioBase = salarioBase;
+            if(salarioBase <= 0){
+                try{
+                }catch (Exception e){
+                    System.out.println("Salario está nulo");
+                }
+            }else {
+                this.salarioBase = salarioBase;
+            }
+
     }
 
     public void print(){
-        System.out.println(this.cargo + " , salario base " + this.salarioBase+ ", salario total " + this.salarioBase);
-        System.out.println(this.cargo + " , salario base " + this.salarioBase+ ", salario total " + this.salarioBase);
+        System.out.println("Cargo: " + this.cargo + " , salario base " + this.salarioBase+ ", salario total " + getSalario());
     }
 }
